@@ -1,0 +1,13 @@
+#pragma once
+
+#ifndef __INPUT_COMMON_HPP__
+#define __INPUT_COMMON_HPP__
+
+enum INPUT_ACTION_TYPE {
+	INPUT_ACTION_NONE = 0,
+	INPUT_ACTION_PRESS = 1,
+	INPUT_ACTION_RELEASE = 2,
+	INPUT_ACTION_DOUBLE = 3
+};
+
+#endif
