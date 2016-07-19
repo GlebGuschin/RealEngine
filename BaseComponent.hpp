@@ -50,6 +50,8 @@ public:
 
 protected:
 
+	virtual void onEnterWorld() {}
+	virtual void onLeaveWorld() {}
 	/*
 	void attachEntity(Entity*entity);
 	void detachEntity(Entity*entity);

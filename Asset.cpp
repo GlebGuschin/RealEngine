@@ -225,4 +225,10 @@ void  Asset::reload() {
 	object at: #name put: 'Peterson'.
 	object at: #key put: 'Mason'.
 
+	void foo1( Integer a, CardMaster card) {
+	
+	}
+
+
+
 */

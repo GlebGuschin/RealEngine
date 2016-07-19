@@ -75,8 +75,8 @@ public:
 	RenderScene* getRenderScene() const { return renderScene; }
 	AudioScene* getAudioScene() const { return audioScene; }
 
-	void addListener(WorldListener*);
-	void removeListener(WorldListener*);
+	void addListener(WorldListener*, unsigned priority = 0) {}
+	void removeListener(WorldListener*) {}
 
 
 	bool spawnEntity(Entity* entity, Entity* owner = NULL);

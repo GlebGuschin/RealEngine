@@ -92,16 +92,6 @@ public:
 
 
 class Listener : virtual public Referenced {
-
-	unsigned priority;
-
-public:
-
-	Listener() : priority(0) {}
-	Listener(unsigned priority_) : priority(priority_) {}
-
-	unsigned getPriority() const { return priority; }
-
 };
 
 
