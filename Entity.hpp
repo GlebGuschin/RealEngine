@@ -29,8 +29,8 @@ class Entity : public EntityListener {
 
 public:
 
-	Entity();
-	~Entity();
+	Entity() {}
+	~Entity() {}
 
 	//void setName( Name name_) { name = name_; }
 	//Name getName() const { return name; }
@@ -39,14 +39,15 @@ public:
 	//Entity* clone() const;
 	//void destroy();
 
-	virtual unsigned getNumComponents() const;
-	virtual Component* getComponent(unsigned index) const;
-	virtual void addComponent(Component*);
-	virtual void removeComponent(Component*);
+	virtual unsigned getNumComponents() const = 0;
+	virtual Component* getComponent(unsigned index) const=0;
+	virtual void addComponent(Component*)=0;
+	virtual void removeComponent(Component*)=0;
 	//virtual void removeAllComponents();
 	//virtual bool findComponent(Component*);
 	//virtual void replaceComponent(Component*, Component*);
 
+	/*
 
 	template<typename T>  T* findComponent() {
 		for (uint32 i = 0; i < components.size(); i++) {
@@ -63,7 +64,7 @@ public:
 		}
 		return (T*)NULL;
 	}
-
+	*/
 	/*
 	template<typename T>  T* findComponentInChildren() {
 		Entities entities;
@@ -125,8 +126,8 @@ public:
 	bool isChild(Entity*) const;
 	bool findRecursive(Entity*) const;
 
-	//size_t getNumChildren() const { return children.size(); }
-	//Entity* getChild(size_t index) const { return children[index]; }
+	virtual size_t getNumChildren() const { return 0; }
+	Entity* getChild(size_t index) const { return NULL; }
 
 	//void collectAllChildren(Entities&);
 
@@ -175,6 +176,7 @@ class EntityManager : public Referenced {
 
 public:
 	virtual Entity* createEntity() { return NULL; }
+	virtual void releaseEntity(Entity*) {}
 };
 
 template<typename T>  T* FindComponent(Entity*entity) {

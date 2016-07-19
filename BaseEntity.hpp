@@ -5,9 +5,28 @@
 
 #include "Entity.hpp"
 
+class BaseEntity;
+
+class BaseEntityManager : public EntityManager {
+
+	DynamicArray<Entity*> entities;
+
+public:
+
+	Entity* createEntity();
+	void releaseEntity(Entity*entity);
+
+};
+
+
+
+
+
 
 class BaseEntity : public Entity {
 		
+	SharedPtr<BaseEntityManager> manager;
+
 	DynamicArray<SharedPtr<Component>> components;
 	DynamicArray<SharedPtr<Entity>> children;
 	SharedPtr<Entity> parent;
@@ -25,8 +44,8 @@ class BaseEntity : public Entity {
 	
 public:
 
-	BaseEntity();
-	~BaseEntity();
+	BaseEntity(BaseEntityManager* manager_) : manager(manager_) {}
+	~BaseEntity(){ manager->releaseEntity(this); }
 
 	void setName( Name name_) { name = name_; }
 	Name getName() const { return name; }
@@ -167,11 +186,6 @@ Entity* CreateEntity();
 typedef SharedPtr<Entity> EntityRef;
 
 
-class EntityManager : public Referenced {
-
-public:
-	virtual Entity* createEntity() { return NULL; }
-};
 
 
 #endif
