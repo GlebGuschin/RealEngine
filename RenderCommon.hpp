@@ -152,10 +152,11 @@ enum BLEND_FUNC_TYPE {
 };
 
 struct BlendState {
-	bool blend;
+
+	bool enable;
 	void reset() { 
 		opType = BLEND_OP_ADD;
-		blend = false; 
+		enable = false;
 		srcFunc = BLEND_FUNC_ONE; 
 		dstFunc = BLEND_FUNC_ONE; 
 	}
@@ -163,6 +164,16 @@ struct BlendState {
 	BLEND_OP_TYPE opType;
 
 	BlendState() { reset(); }
+
+	inline bool operator==(const BlendState& other) const {
+
+		return enable == other.enable && 
+			opType == other.opType && 
+			srcFunc == other.srcFunc &&
+			dstFunc == other.dstFunc;
+
+	}
+
 };
 
 
@@ -194,6 +205,9 @@ public:
 	//void setDepthFunc(COMPARE_FUNC_TYPE value) { depthFunc = value; }
 	void setDepthTest(bool) {}
 	void setDepthWrite(bool) {}
+	void setDepthBoundTest(bool) {}
+	void setDepthBound(float zn, float zf) {}
+
 
 	void setCullType(CULL_TYPE cullType) { rasterizerState.cullType = cullType; }
 	void setFillType(FILL_TYPE fillType) { rasterizerState.fillType = fillType; }
