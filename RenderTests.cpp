@@ -601,6 +601,11 @@ void meshTest2() {
 
 void RenderParticleTest() {
 
+	RenderStates renderStates;
+
+
+
+
 	/*
 	SharedPtr<ParticleSystem
 

@@ -114,9 +114,15 @@ struct DepthStencilState {
 		depthMask = true;
 	}
 	DepthStencilState() { reset(); }
+
+
+	bool operator==(const DepthStencilState& other) const {
+		return depthFunc == other.depthFunc && depthTest == other.depthTest && depthMask == other.depthMask;
+	}
+
 };
 
-enum FILL_TYPE { FILL_SOLID, FILL_WISmartPtrRAME };
+enum FILL_TYPE { FILL_SOLID, FILL_WIREFRAME };
 enum CULL_TYPE { CULL_NONE, CULL_FRONT, CULL_BACK };
 
 struct RasterizerState {
@@ -130,8 +136,13 @@ struct RasterizerState {
 	//BOOL            ScissorEnable;
 	//BOOL            MultisampleEnable;
 	//BOOL            AntialiasedLineEnable;
+
 	void reset() { fillType = FILL_SOLID; cullType = CULL_NONE; }
 	RasterizerState() { reset();  }
+
+	inline bool operator==(const RasterizerState& other) const { 
+		return fillType == other.fillType && cullType == other.cullType;
+	}
 };
 
 
@@ -197,12 +208,12 @@ public:
 	const RasterizerState&  getRasterizerState() const { return rasterizerState; }
 
 	
-	void setBlending( bool value ) { blendState.blend = value; }
+	void setBlending( bool value ) { blendState.enable = value; }
 	void setBlendFunc(BLEND_FUNC_TYPE srcFunc_, BLEND_FUNC_TYPE dstFunc_) { blendState.srcFunc = srcFunc_; blendState.dstFunc = dstFunc_; }
 	void setBlendOp(BLEND_OP_TYPE opType) { blendState.opType = opType; }
 	
 
-	//void setDepthFunc(COMPARE_FUNC_TYPE value) { depthFunc = value; }
+	void setDepthFunc(COMPARE_FUNC_TYPE depthFunc) { depthStencilState.depthFunc = depthFunc; }
 	void setDepthTest(bool) {}
 	void setDepthWrite(bool) {}
 	void setDepthBoundTest(bool) {}
@@ -212,15 +223,9 @@ public:
 	void setCullType(CULL_TYPE cullType) { rasterizerState.cullType = cullType; }
 	void setFillType(FILL_TYPE fillType) { rasterizerState.fillType = fillType; }
 
-	inline bool operator==(const RenderStates& other) const {
-	
-		/*
-		return blending == other.blending &&
-			depthFunc == other.depthFunc &&
-			depthTest == other.depthTest;
-			*/
-		return false;
-	
+	inline bool operator==(const RenderStates& other) const {			
+		return blendState == other.blendState && depthStencilState == other.depthStencilState;
+		return false;	
 	}
 
 };
