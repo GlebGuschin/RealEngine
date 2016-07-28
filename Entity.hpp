@@ -121,13 +121,13 @@ public:
 	//virtual Entity* getParent() const { return parent; }
 	//bool isBase() const;
 
-	void addChild(Entity*);
-	void removeChild(Entity*);
-	bool isChild(Entity*) const;
-	bool findRecursive(Entity*) const;
+	virtual void addChild(Entity*) =0;
+	virtual void removeChild(Entity*) = 0;
+	virtual bool isChild(Entity*) const = 0;
+	virtual bool findRecursive(Entity*) const = 0;
 
-	virtual size_t getNumChildren() const { return 0; }
-	Entity* getChild(size_t index) const { return NULL; }
+	virtual size_t getNumChildren() const = 0;
+	virtual Entity* getChild(unsigned index) const = 0;
 
 	//void collectAllChildren(Entities&);
 

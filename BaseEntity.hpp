@@ -132,16 +132,16 @@ public:
 	}
 	*/
 
-	virtual Entity* getParent() const { return parent; }
-	//bool isBase() const;
+	Entity* getParent() const { return parent; }
 
 	void addChild(Entity*);
 	void removeChild(Entity*);
 	bool isChild(Entity*) const;
 	bool findRecursive(Entity*) const;
 
-	size_t getNumChildren() const { return children.size(); }
-	Entity* getChild(size_t index) const { return children[index]; }
+	unsigned getNumChildren() const { return children.size(); }
+	Entity* getChild(unsigned index) const { return children[index]; }
+
 
 	//void collectAllChildren(Entities&);
 

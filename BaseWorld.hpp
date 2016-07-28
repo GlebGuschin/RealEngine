@@ -13,6 +13,8 @@ class BaseWorld : public World {
 	//std::vector<ComponentUpdateQueueItem> componentUpdateQueue;
 	//DynamicArray<ComponentSmartPtr> components;
 
+	DynamicArray<SharedPtr<Entity>> entities;|
+
 	SharedPtr<RenderScene> renderScene;
 	SharedPtr<AudioScene> audioScene;
 
@@ -33,6 +35,8 @@ class BaseWorld : public World {
 	typedef std::vector<ComponentTimer> ComponentTimerVector;
 	ComponentTimerVector  componentTimers;
 	*/
+
+	DynamicArray<SharedPtr<WorldListener>> listeners;
 
 protected:
 
@@ -75,12 +79,12 @@ public:
 	RenderScene* getRenderScene() const { return renderScene; }
 	AudioScene* getAudioScene() const { return audioScene; }
 
-	void addListener(WorldListener*, unsigned priority = 0) {}
-	void removeListener(WorldListener*) {}
+	void addListener(WorldListener*, unsigned priority = 0);
+	void removeListener(WorldListener*);
 
 
 	bool spawnEntity(Entity* entity, Entity* owner = NULL);
-	void destroyEntity(Entity* entity){}
+	void destroyEntity(Entity* entity);
 
 	//Entity* spawnEntity( const EntitySpawnInfo&, Entity* owner = NULL );
 	//void destroyEntity(Entity* entity, const EntityDestroyInfo&);
