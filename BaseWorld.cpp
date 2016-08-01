@@ -12,15 +12,17 @@ void BaseWorld::removeListener(WorldListener* worldListener) {
 	listeners.remove(worldListener);
 }
 
-bool BaseWorld::spawnEntity(Entity* entity, Entity* owner) {
+bool BaseWorld::spawnEntity(Entity* entity, Entity* owner_) {
+
+	Entity* owner = owner_ ? owner_ : getRoot();
 
 	if (owner) {
-
-	} else {
-	
+	} else {	
 	}
 
 	entities.add(entity);
+
+	for(unsigned i =0; i < listeners.size(); i++) listeners[i]->onSpawnEntity(entity);
 
 	return true;
 
@@ -28,6 +30,7 @@ bool BaseWorld::spawnEntity(Entity* entity, Entity* owner) {
 
 void BaseWorld::destroyEntity(Entity* entity) {
 
+	for(unsigned i =0; i < listeners.size(); i++) listeners[i]->onDestroyEntity(entity);
 	entities.remove(entity);
 
 }

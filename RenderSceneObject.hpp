@@ -118,7 +118,7 @@ public:
 	void addRenderObject(const RenderObject& renderObject)  { renderObjects.push_back(renderObject); }
 
 	//size_t getNumRenderObjects(RENDER_OBJECT_BUCKET_TYPE type = RENDER_OBJECT_BUCKET_DEFAULT) const { return renderObjects.size(); }
-	unsigned getNumRenderObjects() const { return renderObjects.size(); }
+	unsigned getNumRenderObjects() const { return (unsigned)renderObjects.size(); }
 	//const RenderObject& getRenderObject(unsigned index, RENDER_OBJECT_BUCKET_TYPE type = RENDER_OBJECT_BUCKET_DEFAULT) const { return renderObjects[index]; }
 	const RenderObject& getRenderObject(unsigned index) const { return renderObjects[index]; }
 

@@ -137,11 +137,23 @@ struct RasterizerState {
 	//BOOL            MultisampleEnable;
 	//BOOL            AntialiasedLineEnable;
 
-	void reset() { fillType = FILL_SOLID; cullType = CULL_NONE; }
+	bool scissorEnable;
+	bool multisampleEnable;
+
+	void reset() { 
+		fillType = FILL_SOLID; 
+		cullType = CULL_NONE;
+		scissorEnable = multisampleEnable = false;	
+	}
+
 	RasterizerState() { reset();  }
 
 	inline bool operator==(const RasterizerState& other) const { 
-		return fillType == other.fillType && cullType == other.cullType;
+		return fillType == other.fillType && 
+			cullType == other.cullType &&
+			scissorEnable == other.scissorEnable && 
+			multisampleEnable == other.multisampleEnable;
+			;
 	}
 };
 
@@ -219,6 +231,7 @@ public:
 	void setDepthBoundTest(bool) {}
 	void setDepthBound(float zn, float zf) {}
 
+	void setScissor(bool) {}
 
 	void setCullType(CULL_TYPE cullType) { rasterizerState.cullType = cullType; }
 	void setFillType(FILL_TYPE fillType) { rasterizerState.fillType = fillType; }

@@ -13,7 +13,7 @@ class BaseWorld : public World {
 	//std::vector<ComponentUpdateQueueItem> componentUpdateQueue;
 	//DynamicArray<ComponentSmartPtr> components;
 
-	DynamicArray<SharedPtr<Entity>> entities;|
+	DynamicArray<SharedPtr<Entity>> entities;
 
 	SharedPtr<RenderScene> renderScene;
 	SharedPtr<AudioScene> audioScene;
