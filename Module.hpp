@@ -6,7 +6,7 @@
 #include "Referenced.hpp"
 #include "String.hpp"
 
-
+class ModuleManager;
 
 class ModuleListener : public Listener {
 
@@ -22,19 +22,17 @@ class Module : public Referenced {
 	virtual bool isLoading() const { return false; }
 
 public:
-
-	static Module* LoadModule( const String& ) { return NULL; }
-
+	
 };
 
-
+/*
 class ModuleManager : public Referenced {
-
 public:
-
-
+	Module* loadModule(const String&) { return NULL; }
+	void unloadModule(Module*) {  }
 };
+*/
 
-
+ModuleManager* CreateModuleManager();
 
 #endif

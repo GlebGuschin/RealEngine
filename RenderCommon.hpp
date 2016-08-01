@@ -29,6 +29,12 @@ enum COMPARE_FUNC_TYPE {
 	COMPARE_FUNC_LESS
 };
 
+enum STENCIL_OP_TYPE {
+	STENCIL_OP_KEEP,
+	STENCIL_OP_REPLACE,
+	STENCIL_OP_ZERO
+};
+
 
 
 enum PRIMITIVE_TYPE {
@@ -104,20 +110,42 @@ struct Projection {
 
 enum DEPTH_SORT_TYPE { DEPTH_SORT_F2B, DEPTH_SORT_B2F };
 
+enum STENCIL_FACE_TYPE { STENCIL_FACE_FRONT = 0, STENCIL_FACE_BACK = 1, STENCIL_FACE_MAX =2  };
+
+struct StencilFace {
+	STENCIL_OP_TYPE  failOp, passOp, depthFailOp;		
+	COMPARE_FUNC_TYPE func;
+	void reset() { func = COMPARE_FUNC_LESS;  failOp = passOp = depthFailOp = STENCIL_OP_KEEP; }
+	StencilFace() { reset(); }
+	bool operator==(const StencilFace& other) const { 
+		return func == other.func && failOp == other.failOp && passOp == other.passOp && depthFailOp == other.depthFailOp;
+	}
+};
 
 struct DepthStencilState {
+
 	COMPARE_FUNC_TYPE depthFunc;
-	bool depthTest, depthMask;
+	bool depthTest, depthMask, stencilTest;
+	StencilFace stencilFace[STENCIL_FACE_MAX];
+	unsigned stencilMask;
+
 	void reset() {
 		depthTest = true;
 		depthFunc = COMPARE_FUNC_LESS;
 		depthMask = true;
+		stencilTest = false;
+		stencilMask = 0;
+		stencilFace[STENCIL_FACE_FRONT].reset();
+		stencilFace[STENCIL_FACE_BACK].reset();
 	}
 	DepthStencilState() { reset(); }
 
 
 	bool operator==(const DepthStencilState& other) const {
-		return depthFunc == other.depthFunc && depthTest == other.depthTest && depthMask == other.depthMask;
+		return depthFunc == other.depthFunc && depthTest == other.depthTest && depthMask == other.depthMask &&
+			stencilMask == other.stencilMask &&
+			stencilFace[STENCIL_FACE_FRONT] == other.stencilFace[STENCIL_FACE_FRONT] &&
+			stencilFace[STENCIL_FACE_BACK] == other.stencilFace[STENCIL_FACE_BACK];
 	}
 
 };
