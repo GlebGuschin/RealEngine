@@ -23,7 +23,7 @@
 
 
 Skeleton* CreateTestSkeleton();
-
+void CustomParamTest();
 
 
 enum RENDER_PROFILE_TYPE {
@@ -619,6 +619,8 @@ void RenderParticleTest() {
 	}
 	*/
 
+	CustomParamTest();
+
 	SharedPtr<ParticleSystemManager> particleSystemManager = CreateParticleSystemManager();
 	SharedPtr<ParticleSystem> particleSystem1 = particleSystemManager->createParticleSystem();
 	SharedPtr<ParticleSystem> particleSystem2 = particleSystemManager->createParticleSystem();
@@ -628,5 +630,106 @@ void RenderParticleTest() {
 	particleSystem1->addStream(new ParticleStream);
 	particleSystem1->addStream(new ParticleStream);
 
-
 }
+
+
+
+
+enum  CUSTOM_PARAM_TYPE {
+	CUSTOM_PARAM_NONE = 0,
+	CUSTOM_PARAM_COLOR = 1,
+	CUSTOM_PARAM_VEC4 = 2,
+	CUSTOM_PARAM_INT = 3,
+	CUSTOM_PARAM_FLOAT = 4,
+	CUSTOM_PARAM_BOOL = 5,
+	CUSTOM_PARAM_MATRIX = 6
+};
+
+class CustomParam {
+
+	CUSTOM_PARAM_TYPE type;
+	Name name;
+
+	union {
+
+		float float_value;
+		int int_value;
+		bool bool_value;
+
+	};
+
+	Vector4 vec4_value;
+	Color color_value;
+	Matrix4x4 matrix_value;
+
+public:
+
+	CustomParam() :type(CUSTOM_PARAM_NONE) {}
+	CustomParam(const Name& name_, const Vector4& value) : name(name_), type(CUSTOM_PARAM_VEC4), vec4_value(value){}
+	CustomParam(const Name& name_, const Color& value) : name(name_), type(CUSTOM_PARAM_COLOR), color_value(value){}
+	CustomParam(const Name& name_, float value) : name(name_), type(CUSTOM_PARAM_FLOAT), float_value(value) {}
+	CustomParam(const Name& name_, bool value) : name(name_), type(CUSTOM_PARAM_BOOL), bool_value(value) {}
+	CustomParam(const Name& name_, int value) : name(name_), type(CUSTOM_PARAM_INT), int_value(value) {}
+	CustomParam(const Name& name_, const Matrix4x4& value) : name(name_), type(CUSTOM_PARAM_MATRIX), matrix_value(value) {}
+
+	CUSTOM_PARAM_TYPE getType() const { return type; }
+	const Name& getName() const { return name; }
+
+	bool getValue(Vector4& value) const {
+		if (type == CUSTOM_PARAM_VEC4) {
+			value = vec4_value;
+			return true;
+		}
+		return false;
+	}
+
+	bool getValue(Color& value) const {
+		if (type == CUSTOM_PARAM_COLOR) {
+			value = color_value;
+			return true;
+		}
+		return false;
+	}
+
+};
+
+
+
+
+class CustomParams {
+	std::vector<CustomParam> params;
+public:
+
+	void addParam(const CustomParam& param) {
+
+		for (size_t i = 0; i < params.size(); i++) {
+
+			if (params[i].getName() == param.getName()) {
+				params[i] = param;
+				return;
+			}
+		}
+		params.push_back(param);
+
+	}
+	unsigned getNumParams() const { return (unsigned)params.size(); }
+	const CustomParam& operator[](unsigned index) { return params[index]; }
+	void clear() { params.clear(); }
+
+};
+
+
+void CustomParamTest() {
+
+	CustomParams customParams;
+	customParams.addParam(CustomParam("FogColor", Color::BLUE));
+	customParams.addParam(CustomParam("AmbientColor", Color::RED));
+	customParams.addParam(CustomParam("CropMatrix", Matrix()));
+	customParams.addParam(CustomParam("UseTexture", true));
+	customParams.addParam(CustomParam("FogDistance", 100.0f));
+	customParams.addParam(CustomParam("NumLights", 16));
+
+	int i = 0;
+}
+
+
