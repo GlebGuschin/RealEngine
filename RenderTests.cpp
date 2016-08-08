@@ -737,4 +737,9 @@ struct PostProcessInfo {
 	
 };
 
+class RenderPass : public Referenced {};
+
+class RenderContex 
+
+
 
