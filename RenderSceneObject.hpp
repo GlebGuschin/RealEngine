@@ -95,7 +95,7 @@ public:
 
 
 
-struct RenderPass {
+struct RenderPass2 {
 	int renderStates;
 	int renderTarget;
 };

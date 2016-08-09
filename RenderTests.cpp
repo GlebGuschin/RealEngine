@@ -737,9 +737,17 @@ struct PostProcessInfo {
 	
 };
 
+
 class RenderPass : public Referenced {};
 
-class RenderContex 
+class RenderContext : public Referenced {
+
+	virtual void setRenderPass(RenderPass*) = 0;
+
+};
+
+
+
 
 
 

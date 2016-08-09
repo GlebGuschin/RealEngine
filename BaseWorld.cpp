@@ -35,3 +35,6 @@ void BaseWorld::destroyEntity(Entity* entity) {
 
 }
 
+
+
+World* CreateWorld() { return new BaseWorld; }
