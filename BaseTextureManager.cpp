@@ -195,6 +195,8 @@ public:
 
 	friend class BaseTexture;
 
+	void getTextures( DynamicArray<SharedPtr<Texture>>& ) const;
+
 };
 
 
@@ -256,6 +258,15 @@ void BaseTextureManager::releaseTexture(BaseTexture* texture) {
 
 	int i = 0;
 	textures.remove(texture);
+
+}
+
+void BaseTextureManager::getTextures( DynamicArray<SharedPtr<Texture>>& textures_) const {
+
+	textures_.clear();
+	for(unsigned i =0; i < textures.size(); i++) {
+		textures_.add( textures[i] );
+	}
 
 }
 
