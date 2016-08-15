@@ -14,7 +14,7 @@ protected:
 
 public:
 
-	LightComponent() : {}
+	LightComponent() : BaseComponent() {}
 	//BaseComponent(const Name& group_) : world(NULL), entity(NULL), group(group_){}
 	~LightComponent() {}
 	

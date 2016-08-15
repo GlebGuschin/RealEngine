@@ -5,6 +5,21 @@
 
 class BaseMaterialManager;
 
+class BaseSurface : public Surface {
+
+	SharedPtr<BaseMaterialManager> manager;
+
+public:
+
+	BaseSurface(BaseMaterialManager* manager_,  const SurfaceInfo& info) : Surface(info), manager(manager_) {}
+	//BaseSurface(BaseMaterialManager* manager_, MaterialAsset* asset) : Material(asset), manager(manager_) {}
+	//BaseSurface(BaseMaterialManager* manager_, const MaterialInfo& info, MaterialAsset* asset) : Material(info, asset), manager(manager_) {}
+	
+	~BaseSurface();
+
+};
+
+
 class BaseMaterial : public Material {
 
 	SharedPtr<BaseMaterialManager> manager;
@@ -14,6 +29,7 @@ public:
 	BaseMaterial(BaseMaterialManager* manager_,  const MaterialInfo& info) : Material(info), manager(manager_) {}
 	BaseMaterial(BaseMaterialManager* manager_, MaterialAsset* asset) : Material(asset), manager(manager_) {}
 	BaseMaterial(BaseMaterialManager* manager_, const MaterialInfo& info, MaterialAsset* asset) : Material(info, asset), manager(manager_) {}
+	~BaseMaterial();
 
 	Material* clone() const;
 };
@@ -23,10 +39,15 @@ class BaseMaterialManager : public MaterialManager {
 
 	DynamicArray<Material*> materials;
 	SharedPtr<TextureManager> textureManager;
+	DynamicArray<Surface*> surfaces;
 
 protected:
 
 public:
+
+	Surface* createSurface(const SurfaceInfo&);
+	Surface* createSurface(const AssetName&);
+	void releaseSurface(Surface*);
 
 	Material* createMaterial(const MaterialInfo&);
 	Material* createMaterial(Material*);
@@ -37,6 +58,14 @@ public:
 };
 
 SharedPtr<BaseMaterialManager> gMaterialManager;
+
+Surface* BaseMaterialManager::createSurface(const SurfaceInfo&) {
+	return NULL;
+}
+
+Surface* BaseMaterialManager::createSurface(const AssetName&) {
+return NULL;
+}
 
 Material* BaseMaterialManager::createMaterial(const MaterialInfo& info) {
 
@@ -64,6 +93,12 @@ void BaseMaterialManager::releaseMaterial(Material* material) {
 	materials.remove(material);
 }
 
+void BaseMaterialManager::releaseSurface(Surface* surface) {
+
+	surfaces.remove(surface);
+}
+
+
 Material* BaseMaterialManager::cloneMaterial(Material* material) {
 	
 	BaseMaterial* material2 = new BaseMaterial(this, material->getInfo(), material->getAsset());
@@ -77,10 +112,23 @@ Material* BaseMaterialManager::cloneMaterial(Material* material) {
 }
 
 
+BaseMaterial::~BaseMaterial() { 
+	manager->releaseMaterial(this);	
+}
+
+
 Material* BaseMaterial::clone() const { 
 	BaseMaterialManager* manager = (BaseMaterialManager*)this->manager;
 	return manager->cloneMaterial((Material*)this);
 }
+
+
+BaseSurface::~BaseSurface() {
+
+	manager->releaseSurface(this);
+
+}
+
 
 MaterialManager* GetMaterialManager() {
 

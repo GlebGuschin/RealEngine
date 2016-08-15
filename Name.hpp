@@ -32,7 +32,7 @@ class Name {
 		TableItem() { name[0] = 0; counter = 0; }
 	};
 
-	Name(unsigned id_ ) { id = id_; Table[0].counter++; }
+	Name(unsigned id_ ) { id = id_; Table[0].counter++; Counter++; }
 
 public:
 
@@ -70,7 +70,12 @@ public:
 
 	}
 
-	Name(const Name& name_) { id = name_.id;  Table[id].counter++; Counter++; name = &Table[id].name[0]; }
+	Name(const Name& name_) { 
+		id = name_.id;  
+		Table[id].counter++; 
+		Counter++; 
+		name = &Table[id].name[0]; 
+	}
 
 	~Name() {
 
@@ -84,7 +89,7 @@ public:
 	
 	}
 
-	Name& operator=(const Name& rhs) { Table[rhs.id].counter++; id = rhs.id;  return *this; }
+	Name& operator=(const Name& rhs) { Table[rhs.id].counter++; Counter++; id = rhs.id;  return *this; }
 
 	operator const char*() const { return Table[id].name; }
 	operator unsigned() const { return id; }

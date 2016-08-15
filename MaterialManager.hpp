@@ -11,7 +11,9 @@ class MaterialManager : public Referenced {
 	
 public:
 
-	//virtual Surface* createSurface(const SurfaceInfo&) = 0;
+	virtual Surface* createSurface(const SurfaceInfo&) = 0;
+	virtual Surface* createSurface(const AssetName&) = 0;
+	virtual void releaseSurface(Surface*) = 0;
 
 	virtual Material* createMaterial(const MaterialInfo&) = 0;
 	virtual Material* createMaterial(Material*) = 0;

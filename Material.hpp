@@ -18,15 +18,29 @@ struct SurfaceInfo {
 };
 
 
-
-class Surface : public Referenced {
+class SurfaceAsset : public Asset {
 
 	SurfaceInfo info;
 
 public:
 
+	SurfaceAsset(const SurfaceInfo& info) {}
+
+};
+
+
+class Surface : public Referenced {
+
+	SurfaceInfo info;
+	SharedPtr<SurfaceAsset> asset;
+
+public:
+
 	Surface() {}
 	Surface(const SurfaceInfo& info_) : info(info_) { }
+	Surface(SurfaceAsset* asset_) : asset(asset_) { }
+
+	const SurfaceInfo& getInfo() { return info; }
 
 };
 
@@ -131,6 +145,8 @@ class Material : public Referenced {
 
 	//DynamicArray<SharedPtr<MaterialLayer>> layers;
 
+	SharedPtr<Surface> surface;
+
 public:
 
 
@@ -138,6 +154,7 @@ public:
 	Material(MaterialAsset* asset_) : asset(asset_) {}
 	Material(const MaterialInfo& info_, MaterialAsset* asset_) : asset(asset_), info(info_) {}
 
+	Surface* getSurface() const { return surface; }
 	void setOpacity(float alpha) { info.opacity = alpha; }
 	float getOpacity() const { return info.opacity; }
 	bool isOpacity() const { return info.opacity >= 1.0f; }
