@@ -14,7 +14,10 @@ void Name::Init() {
 
 void Name::Finit() {
 
-	if (Counter == 0) delete Table;
+	if (Counter == 0) {
+		delete Table;
+		Table = NULL;
+	}
 
 }
 
