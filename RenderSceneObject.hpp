@@ -10,6 +10,13 @@
 
 //class GpuTexture;
 
+class OcclusionArea : public Referenced {
+	bool visible;
+public:
+	bool isVisible() const { return false; }
+};
+
+
 class RenderSceneView {
 
 	Projection projection;
@@ -66,13 +73,14 @@ enum RENDER_OBJECT_TYPE {
 };
 #endif
 
-
-class RenderObject {
+class RenderObject : public Referenced {
 
 	Transform transform;
 	RenderSurface surface;
 
 	unsigned modificators;
+
+	SharedPtr<OcclusionArea> occlusionArea;
 
 public:
 

@@ -19,17 +19,6 @@ struct FogInfo {
 	Color color;
 };
 
-
-
-class OcclusionArea : public Referenced {
-
-	bool visible;
-
-public:
-
-	bool isVisible() const { return false; }
-};
-
 class OctreeNode;
 enum OCTREE_NODE_TYPE {OCTREE_NODE_MAX=8};
 
