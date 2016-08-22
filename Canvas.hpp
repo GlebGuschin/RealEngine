@@ -34,4 +34,19 @@ public:
 
 Canvas* CreateCanvas(RenderScene*);
 
+
+struct SpriteInfo {
+	unsigned x, y, width, height;
+};
+
+class Sprite : public Referenced {
+	SpriteInfo info;
+public:
+
+	const SpriteInfo& getInfo() const { return info; };
+	virtual Texture* getTexture() const = 0;
+
+
+};
+
 #endif

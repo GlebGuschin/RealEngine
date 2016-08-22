@@ -649,6 +649,7 @@ class CustomParam {
 
 	CUSTOM_PARAM_TYPE type;
 	Name name;
+	unsigned mask;
 
 	union {
 
@@ -665,12 +666,12 @@ class CustomParam {
 public:
 
 	CustomParam() :type(CUSTOM_PARAM_NONE) {}
-	CustomParam(const Name& name_, const Vector4& value) : name(name_), type(CUSTOM_PARAM_VEC4), vec4_value(value){}
-	CustomParam(const Name& name_, const Color& value) : name(name_), type(CUSTOM_PARAM_COLOR), color_value(value){}
-	CustomParam(const Name& name_, float value) : name(name_), type(CUSTOM_PARAM_FLOAT), float_value(value) {}
-	CustomParam(const Name& name_, bool value) : name(name_), type(CUSTOM_PARAM_BOOL), bool_value(value) {}
-	CustomParam(const Name& name_, int value) : name(name_), type(CUSTOM_PARAM_INT), int_value(value) {}
-	CustomParam(const Name& name_, const Matrix4x4& value) : name(name_), type(CUSTOM_PARAM_MATRIX), matrix_value(value) {}
+	CustomParam(const Name& name_, const Vector4& value, unsigned mask = 0xFF) : name(name_), type(CUSTOM_PARAM_VEC4), vec4_value(value){}
+	CustomParam(const Name& name_, const Color& value, unsigned mask = 0xFF) : name(name_), type(CUSTOM_PARAM_COLOR), color_value(value){}
+	CustomParam(const Name& name_, float value, unsigned mask = 0xFF) : name(name_), type(CUSTOM_PARAM_FLOAT), float_value(value) {}
+	CustomParam(const Name& name_, bool value, unsigned mask = 0xFF) : name(name_), type(CUSTOM_PARAM_BOOL), bool_value(value) {}
+	CustomParam(const Name& name_, int value, unsigned mask = 0xFF) : name(name_), type(CUSTOM_PARAM_INT), int_value(value) {}
+	CustomParam(const Name& name_, const Matrix4x4& value, unsigned mask = 0xFF) : name(name_), type(CUSTOM_PARAM_MATRIX), matrix_value(value) {}
 
 	CUSTOM_PARAM_TYPE getType() const { return type; }
 	const Name& getName() const { return name; }
@@ -738,7 +739,21 @@ struct PostProcessInfo {
 };
 
 
+enum RENDER_TARGET_TYPE {};
+
+class RenderTarget :public Referenced {
+
+};
+
 class RenderPass : public Referenced {};
+
+
+class RenderPassManager : public Referenced {
+	virtual RenderPass* createPass(RenderTarget* colorRenderTarget, RenderTarget* depthStencilRenderTarget=NULL) = 0;
+};
+
+
+
 
 class RenderContext : public Referenced {
 
