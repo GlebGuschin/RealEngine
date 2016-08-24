@@ -22,6 +22,8 @@ public:
 
 	//void setScene( RenderScene*) {}
 
+	virtual void setScissorRect(int x1, int y1, int x2, int y2) {}
+	virtual void drawLine(int x1, int y1, int x2, int y2, const Color& color = Color::WHITE) {}
 	virtual void drawLine( int x1, int y1, int x2, int y2, const Color& color = Color::WHITE ) {}
 	virtual void drawRectangle( int x1, int y1, int x2, int y2, const Color& color = Color::WHITE ) {}
 	virtual void drawText(int x1, int y1, const String&, const Color& color = Color::WHITE, Font* font = NULL) {}
@@ -34,19 +36,5 @@ public:
 
 Canvas* CreateCanvas(RenderScene*);
 
-
-struct SpriteInfo {
-	unsigned x, y, width, height;
-};
-
-class Sprite : public Referenced {
-	SpriteInfo info;
-public:
-
-	const SpriteInfo& getInfo() const { return info; };
-	virtual Texture* getTexture() const = 0;
-
-
-};
 
 #endif
