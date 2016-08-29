@@ -24,6 +24,9 @@ public:
 
 	VertexBuffer(const VertexBufferInfo& info_, HardwareVertexBuffer* hardwareVertexBuffer_) : info(info_), hardwareVertexBuffer(hardwareVertexBuffer_) {}
 
+	virtual void write(unsigned start, unsigned count, MemoryBuffer*) {}
+	virtual void read(unsigned start, unsigned count, MemoryBuffer*) {}
+
 };
 
 struct IndexBufferInfo {

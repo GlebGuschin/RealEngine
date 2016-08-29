@@ -43,6 +43,9 @@ public:
 	virtual void update( unsigned startVertex, unsigned count, MemoryBuffer* ) {}
 	virtual void update( unsigned startVertex, unsigned count, const void* ptr ) {}
 
+	virtual void write( unsigned startVertex, unsigned count, const void* ptr ) {}
+
+
 };
 
 size_t GetStride( VERTEX_TYPE type);

@@ -110,9 +110,15 @@ struct Projection {
 
 enum DEPTH_SORT_TYPE { DEPTH_SORT_F2B, DEPTH_SORT_B2F };
 
+
+
+
+
 enum STENCIL_FACE_TYPE { STENCIL_FACE_FRONT = 0, STENCIL_FACE_BACK = 1, STENCIL_FACE_MAX =2  };
 
-struct StencilFace {
+struct DepthStencilState {
+
+	struct StencilFace {
 	STENCIL_OP_TYPE  failOp, passOp, depthFailOp;		
 	COMPARE_FUNC_TYPE func;
 	void reset() { func = COMPARE_FUNC_LESS;  failOp = passOp = depthFailOp = STENCIL_OP_KEEP; }
@@ -121,8 +127,6 @@ struct StencilFace {
 		return func == other.func && failOp == other.failOp && passOp == other.passOp && depthFailOp == other.depthFailOp;
 	}
 };
-
-struct DepthStencilState {
 
 	COMPARE_FUNC_TYPE depthFunc;
 	bool depthTest, depthMask, stencilTest;

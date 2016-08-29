@@ -8,6 +8,7 @@
 #include "Material.hpp"
 #include "Geometry.hpp"
 #include "Asset.hpp"
+#include "Skeleton.hpp"
 
 struct LodValue {
 
@@ -60,6 +61,8 @@ public:
 
 	void reload() {}
 
+	Skeleton* getSkeleton() const { return NULL; }
+
 };
 
 
@@ -83,6 +86,7 @@ public:
 	//virtual unsigned getNumItems(unsigned lod = 0) { return (unsigned)items.size(); }
 	//virtual MeshItem* getItem(unsigned itemIndex, unsigned lod = 0) { return lods[lod]->getItem(itemIndex); }
 
+	Skeleton* getSkeleton() const { return NULL; }
 	
 	virtual void setMaterial(Material* material, unsigned itemIndex, unsigned lodIndex =0)   {  /*items[itemIndex]->setMaterial(material); */ }
 	virtual Material* getMaterial(unsigned  itemIndex, unsigned lodIndex = 0) const { return NULL; /* items[itemIndex]->getMaterial();*/ }
