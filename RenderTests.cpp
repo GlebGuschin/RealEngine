@@ -745,7 +745,14 @@ class RenderTarget :public Referenced {
 
 };
 
-class RenderPass : public Referenced {};
+
+class RenderPass : public Referenced {
+
+public:
+
+	void addRenderObject(RenderObject*);
+
+};
 
 
 class RenderPassManager : public Referenced {
