@@ -73,6 +73,11 @@ enum RENDER_OBJECT_TYPE {
 };
 #endif
 
+
+class ShaderProgram : public Referenced {
+
+};
+
 class RenderObject : public Referenced {
 
 	Transform transform;
