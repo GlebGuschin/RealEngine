@@ -752,6 +752,9 @@ public:
 
 	void addRenderObject(RenderObject*);
 
+	virtual RenderTarget* getColorRenderTarget(unsigned index = 0) = 0;
+	virtual RenderTarget* getDepthStencilRenderTarget() = 0;
+
 };
 
 

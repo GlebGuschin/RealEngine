@@ -10,7 +10,7 @@
 #include "Asset.hpp"
 #include "Skeleton.hpp"
 
-struct LodValue {
+struct MeshLodValue {
 
 	float distance;
 };
@@ -33,6 +33,9 @@ public:
 
 };
 
+class MeshLevelOfDetail : public Referenced {
+
+};
 
 class MeshLOD : public Referenced {
 
@@ -48,20 +51,29 @@ public:
 	MeshItem& getItem(unsigned itemIndex) { return items[itemIndex]; }
 
 
-	//static 
-
 };
 
 class MeshAsset : public Asset {
 
 	//TextureInfo info;
 	//ResourceName;
+	SharedPtr<Skeleton> skeleton;
+
+	DynamicArray<SharedPtr<MeshLevelOfDetail>> meshLevelOfDetail;
 
 public:
 
 	void reload() {}
 
-	Skeleton* getSkeleton() const { return NULL; }
+	Skeleton* getSkeleton() const { return skeleton; }
+	void setSkeleton(Skeleton* skeleton_) { skeleton = skeleton_; }
+
+	unsigned getNumMeshLevelOfDetail() const { return meshLevelOfDetail.size(); }
+	MeshLevelOfDetail* getMeshLevelOfDetail(unsigned index = 0)  const { return meshLevelOfDetail[index]; }
+	void addMeshLevelOfDetail(MeshLevelOfDetail* ) {  }
+	void removeMeshLevelOfDetail(MeshLevelOfDetail*) {  }
+	void clearMeshLevelOfDetail() {  }
+
 
 };
 
@@ -73,6 +85,7 @@ class Mesh : public Referenced {
 	//DynamicArray<SharedPtr<MeshItem>> items;
 
 	DynamicArray<SharedPtr<MeshLOD>> lods;
+	SharedPtr<Skeleton> skeleton;
 
 public:
 
@@ -86,7 +99,8 @@ public:
 	//virtual unsigned getNumItems(unsigned lod = 0) { return (unsigned)items.size(); }
 	//virtual MeshItem* getItem(unsigned itemIndex, unsigned lod = 0) { return lods[lod]->getItem(itemIndex); }
 
-	Skeleton* getSkeleton() const { return NULL; }
+	Skeleton* getSkeleton() const { return skeleton; }
+	void setSkeleton(Skeleton*skeleton_) { skeleton = skeleton_; }
 	
 	virtual void setMaterial(Material* material, unsigned itemIndex, unsigned lodIndex =0)   {  /*items[itemIndex]->setMaterial(material); */ }
 	virtual Material* getMaterial(unsigned  itemIndex, unsigned lodIndex = 0) const { return NULL; /* items[itemIndex]->getMaterial();*/ }

@@ -18,12 +18,12 @@ struct GlobalConstantBuffer {
 };
 
 
-struct ShaderProgram {
+struct ShaderProgram1 {
 
 	ID3D11VertexShader*    pVertexShader;
 	ID3D11PixelShader*     pPixelShader;
 
-	ShaderProgram() : pVertexShader(NULL), pPixelShader(NULL) {}
+	ShaderProgram1() : pVertexShader(NULL), pPixelShader(NULL) {}
 
 };
 

@@ -123,8 +123,8 @@ class MaterialLayer : public Referenced {
 
 public:
 
-	virtual Texture* getTexture(MATERIAL_TEXTURE_TYPE type = MATERIAL_TEXTURE_DEFAULT) const { return NULL; }
-	virtual void setTexture(Texture* texture, MATERIAL_TEXTURE_TYPE type = MATERIAL_TEXTURE_DEFAULT) {}
+	Texture* getTexture(MATERIAL_TEXTURE_TYPE type = MATERIAL_TEXTURE_DEFAULT) const { return textures[type]; }
+	void setTexture(Texture* texture, MATERIAL_TEXTURE_TYPE type = MATERIAL_TEXTURE_DEFAULT) { textures[type] = texture; }
 
 };
 
@@ -132,9 +132,20 @@ public:
 
 class MaterialAsset : public Asset {
 
+	DynamicArray<SharedPtr<MaterialLayer>> layers;
+
 public:
 
+	Texture* getTexture(MATERIAL_TEXTURE_TYPE type = MATERIAL_TEXTURE_DEFAULT, unsigned layerIndex = 0) const {
+		MaterialLayer* layer = layers[layerIndex];
+		return layer->getTexture(type);
+	}
+
 };
+
+
+
+
 
 class Material : public Referenced {
 
@@ -143,7 +154,7 @@ class Material : public Referenced {
 
 	SharedPtr<MaterialAsset> asset;
 
-	//DynamicArray<SharedPtr<MaterialLayer>> layers;
+	DynamicArray<SharedPtr<MaterialLayer>> layers;
 
 	SharedPtr<Surface> surface;
 
@@ -166,20 +177,21 @@ public:
 	MaterialAsset* getAsset() const { return asset; }
 	MaterialManager* getManager() const { return NULL; }
 
-	//unsigned getNumLayers() const { return (unsigned)layers.size(); }
+	unsigned getNumLayers() const { return (unsigned)layers.size(); }
+	MaterialLayer* getLayer(unsigned layerIndex = 0) const { return layers[layerIndex]; }
 
-	Texture* getTexture(MATERIAL_TEXTURE_TYPE type = MATERIAL_TEXTURE_DEFAULT, unsigned layer = 0) const { 
-
-		//MaterialLayer* l = layers[ layer ];
+	Texture* getTexture(MATERIAL_TEXTURE_TYPE type = MATERIAL_TEXTURE_DEFAULT, unsigned layerIndex = 0) const { 
+		MaterialLayer* layer = layers[ layerIndex ];
 		//Texture* texture = l->getTexture(type);
-		Texture* texture = textures[type];
-
-		return texture; 
+		//Texture* texture = textures[type];
+		return layer->getTexture(type);
 	}
 
-	void setTexture(Texture* texture, MATERIAL_TEXTURE_TYPE type = MATERIAL_TEXTURE_DEFAULT, unsigned layer = 0) {
+	void setTexture(Texture* texture, MATERIAL_TEXTURE_TYPE type = MATERIAL_TEXTURE_DEFAULT, unsigned layerIndex = 0) {
+		MaterialLayer* layer = layers[layerIndex];
+		layer->setTexture(texture, type);
 		//layers[ layer ]->setTexture( texture, type);
-		textures[type] = texture;
+		//textures[type] = texture;
 	} 
 
 	const Color& getColor(MATERIAL_COLOR_TYPE type = MATERIAL_COLOR_DIFFUSE) const { return info.colors[ type ]; }

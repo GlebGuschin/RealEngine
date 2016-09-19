@@ -12,17 +12,60 @@
 class ParticleSystemManager;
 
 
-class ParticleEmitter : public Referenced {
+struct ParticleInfo {
 
-	SharedPtr<Material> material;
-
-public:
-
-	Material* getMaterial() const { return material; }
 
 };
 
-class ParticleEffector : public Referenced {};
+
+struct Particle {
+
+
+};
+
+class ParticleStorage : public Referenced {
+
+};
+
+
+class ParticleEmitter : public Referenced {
+
+	SharedPtr<Material> material;
+	float timeTotal;
+
+protected:
+
+	virtual void onReset();
+	virtual void onUpdate(float timeDelta);
+
+public:
+
+	ParticleEmitter() : timeTotal(0.0f) {}
+
+	Material* getMaterial() const { return material; }
+
+	void reset();
+	void update(float timeDelta);
+
+};
+
+class ParticleEffector : public Referenced {
+
+	float timeTotal;
+
+protected:
+
+	virtual void onReset();
+	virtual void onUpdate(float timeDelta);
+
+public:
+
+	ParticleEffector() : timeTotal(0.0f) {}
+
+	void reset();
+	void update(float timeDelta);
+
+};
 
 class ParticleStream : public Referenced {
 	SharedPtr<Material> material;
