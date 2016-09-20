@@ -15,11 +15,11 @@ public:
 
 	MeshRenderSceneObject() {}	
 
-	virtual void setMesh(Mesh* mesh_) { mesh = mesh_; }
-	virtual Mesh* getMesh(Mesh* mesh_) const { return mesh; }
+	virtual void setMesh(Mesh* mesh_);
+	virtual Mesh* getMesh(Mesh* mesh_) const;
 
-	virtual void setMaterial(Material*, unsigned index ) {}
-	virtual Material* getMaterial(unsigned index) const { return NULL; }
+	virtual void setMaterial(Material*, unsigned index);
+	virtual Material* getMaterial(unsigned index) const;
 
 
 	void processPass(BaseRenderPassContext&);

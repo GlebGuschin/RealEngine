@@ -35,6 +35,12 @@ public:
 
 class MeshLevelOfDetail : public Referenced {
 
+	MeshLodValue meshLodValue;
+
+public:
+
+	const MeshLodValue&  getMeshLodValue() const { return meshLodValue; };
+
 };
 
 class MeshLOD : public Referenced {
@@ -55,8 +61,6 @@ public:
 
 class MeshAsset : public Asset {
 
-	//TextureInfo info;
-	//ResourceName;
 	SharedPtr<Skeleton> skeleton;
 
 	DynamicArray<SharedPtr<MeshLevelOfDetail>> meshLevelOfDetail;
@@ -104,6 +108,10 @@ public:
 	
 	virtual void setMaterial(Material* material, unsigned itemIndex, unsigned lodIndex =0)   {  /*items[itemIndex]->setMaterial(material); */ }
 	virtual Material* getMaterial(unsigned  itemIndex, unsigned lodIndex = 0) const { return NULL; /* items[itemIndex]->getMaterial();*/ }
+
+
+
+
 	//virtual void setGeometry(Geometry* geometry, unsigned itemIndex, unsigned lodIndex = 0) { /*items[itemIndex]->setGeometry(geometry); */ }
 	//virtual Geometry* getGeometry(unsigned  itemIndex) { return items[itemIndex]->getGeometry(); }
 	

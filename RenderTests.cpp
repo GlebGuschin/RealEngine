@@ -729,8 +729,14 @@ void CustomParamTest() {
 	customParams.addParam(CustomParam("UseTexture", true));
 	customParams.addParam(CustomParam("FogDistance", 100.0f));
 	customParams.addParam(CustomParam("NumLights", 16));
+	
+
+	Shape shape1 = Shape::MakeBox(Vector(1.0f,1.0f,1.0f));
+	Shape shape2 = Shape::MakeSphere(1.0f);
+	Shape shape3 = Shape::MakeCylinder(1.0f,0.25f);
 
 	int i = 0;
+
 }
 
 
@@ -770,6 +776,10 @@ class RenderContext : public Referenced {
 	virtual void setRenderPass(RenderPass*) = 0;
 
 };
+
+
+
+
 
 
 

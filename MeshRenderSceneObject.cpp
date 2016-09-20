@@ -1,6 +1,29 @@
 #include "stdafx.h"
-
 #include "MeshRenderSceneObject.hpp"
+
+
+
+void MeshRenderSceneObject::setMesh(Mesh* mesh_) { 
+
+	mesh = mesh_; 
+
+}
+
+Mesh* MeshRenderSceneObject::getMesh(Mesh* mesh_) const { 
+	
+	return mesh; 
+
+}
+
+void MeshRenderSceneObject::setMaterial(Material*, unsigned index) {
+
+}
+
+Material* MeshRenderSceneObject::getMaterial(unsigned index) const { 
+	
+	return NULL; 
+
+}
 
 
 void MeshRenderSceneObject::processPass(BaseRenderPassContext& rpc) {
@@ -19,13 +42,9 @@ void MeshRenderSceneObject::processPass(BaseRenderPassContext& rpc) {
 }
 	
 void MeshRenderSceneObject::processPass(ShadowRenderPassContext&) {
-
-
-
 }
 
 void MeshRenderSceneObject::processPass(TranslucentRenderPassContext&) {
-
 }
 
 

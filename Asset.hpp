@@ -42,10 +42,10 @@ public:
 };
 
 enum ASSET_STATE {
- ASSET_STATE_EMPTY = 0,
- ASSET_STATE_LOADING = 1,
- ASSET_STATE_FULL = 2,
- ASSET_STATE_UNLOADING = 3
+	ASSET_STATE_EMPTY = 0,
+	ASSET_STATE_LOADING = 1,
+	ASSET_STATE_FULL = 2,
+	ASSET_STATE_UNLOADING = 3
 };
 
 class Asset : public Referenced {
@@ -75,6 +75,7 @@ public:
 	virtual void load();
 	virtual void unload();
 	virtual void reload();
+	virtual void store() {}
 
 	void addListener(AssetListener* listener) { listeners.add(listener); }
 	void removeListener(AssetListener*  listener)  { listeners.remove(listener); }
