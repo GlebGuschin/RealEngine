@@ -12,7 +12,7 @@ public:
 
 	ParticleSystem* createParticleSystem(const AssetName&);
 	ParticleSystem* createParticleSystem();
-	void releaseParticleSystem(ParticleSystem*);
+	void destroyParticleSystem(ParticleSystem*);
 
 };
 
@@ -25,7 +25,7 @@ public:
 
 	BaseParticleSystem(BaseParticleSystemManager* manager_) : manager(manager_) {}
 	BaseParticleSystem(ParticleSystemAsset* asset_, BaseParticleSystemManager* manager_) : manager(manager_), ParticleSystem(asset_) {}
-	~BaseParticleSystem() { manager->releaseParticleSystem(this); }
+	~BaseParticleSystem() { manager->destroyParticleSystem(this); }
 
 };
 
@@ -51,7 +51,7 @@ ParticleSystem* BaseParticleSystemManager::createParticleSystem() {
 	return ps;
 }
 
-void BaseParticleSystemManager::releaseParticleSystem(ParticleSystem* ps) {
+void BaseParticleSystemManager::destroyParticleSystem(ParticleSystem* ps) {
 
 	particlesSystems.remove((BaseParticleSystem*)ps);
 

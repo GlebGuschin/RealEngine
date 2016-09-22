@@ -11,7 +11,7 @@ public:
 
 	virtual ParticleSystem* createParticleSystem(const AssetName&) = 0;
 	virtual ParticleSystem* createParticleSystem() = 0;
-	virtual void releaseParticleSystem(ParticleSystem*) = 0;
+	virtual void destroyParticleSystem(ParticleSystem*) = 0;
 
 };
 

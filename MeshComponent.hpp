@@ -18,6 +18,9 @@ public:
 	virtual bool setMesh(const AssetName&) { return false; }
 	void update(const TimeUpdate&) {}
 
+	Material* getMaterial(unsigned index) const { return NULL; }
+
+
 protected:
 
 };

@@ -28,8 +28,6 @@ struct RenderSystem {
 	int createRenderTarget();
 	void destroyRenderTarget();
 
-
-
 };
 
 
@@ -46,19 +44,13 @@ struct RenderContext {
 
 
 
-int _tmain(int argc, _TCHAR* argv[])
+int f2(int argc, _TCHAR* argv[])
 {
-
-
 		long l = 0;
 		while (malloc(1024 * 1024 * 1024)) {
-
 			l += 1024 * 1024 * 1024;
 			printf("Memory %ul \n", l);
 		}
-
-
-
 	return 0;
 }
 

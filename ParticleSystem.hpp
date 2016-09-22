@@ -18,12 +18,76 @@ struct ParticleInfo {
 };
 
 
-struct Particle {
+class Particle {
 
+	Vector position, velocity;
+	float currentLifeTime, maxLifeTime;
+	bool dead : 1;
+	Color color;
+
+public:
+
+	Particle() { reset(); }
+
+	bool operator<(const Particle& particle) const { return currentLifeTime < particle.currentLifeTime; }
+
+	void reset() {}
+	void setMaxLifeTime(float maxLifeTime_) { maxLifeTime = maxLifeTime_; }
+	bool isAlive() const { return !dead; }
+	bool isDead() const { return dead; }
+	void kill() {}
+
+	void setColor(const Color& color_) { color = color_; }
+	const Color& getColor() const { return color; }
+	void applyColor(const Color& color_) { color = color_; }
+
+	const Vector& getPosition() const { return position; }
+	void setPosition(const Vector&position_) { position = position_; }
+	void applyPosition(const Vector&position_) { position = position + position_; }
+	void update(float deltaTime) {	
+		currentLifeTime += deltaTime;
+		dead = currentLifeTime >= maxLifeTime;	
+		position = position + velocity * deltaTime;
+	}
 
 };
 
+#define MAX_PARTICLES 64
+
 class ParticleStorage : public Referenced {
+
+	unsigned currentNumParticles;
+
+	Particle particle[MAX_PARTICLES];
+
+public:
+
+	ParticleStorage() : currentNumParticles(0) {}
+
+	unsigned getNumParticles() const { return currentNumParticles; }
+	unsigned getMaxNumParticles() const { return MAX_PARTICLES; }
+
+	Particle* getParticle(unsigned index) { return &particle[index]; }
+	Particle* spawnParticle() { 
+		check(currentNumParticles<MAX_PARTICLES);
+		particle[currentNumParticles].reset();
+		return &particle[currentNumParticles++]; 
+	}
+
+	
+	//const Particle& getParticle(unsigned index) const { return particle[index]; }
+
+	void update(float deltaTime) {
+	
+		unsigned alived = 0;
+		for (unsigned i = 0; i < MAX_PARTICLES; i++) {
+			particle[i].update(deltaTime);
+			alived += particle[i].isAlive() ? 1 : 0;
+		}
+	
+		std::sort(&particle[0], &particle[MAX_PARTICLES]);
+
+	}
 
 };
 
@@ -65,12 +129,20 @@ public:
 	void reset();
 	void update(float timeDelta);
 
+	virtual void applay(ParticleStorage*) {}
+
 };
 
 class ParticleStream : public Referenced {
+
 	SharedPtr<Material> material;
+
+
 public:
+
 	Material* getMaterial() const { return material; }
+
+
 };
 
 

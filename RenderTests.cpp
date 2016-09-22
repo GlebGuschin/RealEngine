@@ -735,7 +735,20 @@ void CustomParamTest() {
 	Shape shape2 = Shape::MakeSphere(1.0f);
 	Shape shape3 = Shape::MakeCylinder(1.0f,0.25f);
 
-	int i = 0;
+	SharedPtr<ParticleStorage>  particleStorage = new ParticleStorage;
+
+	for (unsigned i = 0; i < 16; i++) {
+		Particle* particle = particleStorage->spawnParticle();
+
+		int ii = 0;
+	}
+
+	for (unsigned i = 0; i < 16; i++) {
+		Particle* particle = particleStorage->spawnParticle();
+		int ii = 0;
+	}
+
+	
 
 }
 
