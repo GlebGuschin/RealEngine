@@ -12,10 +12,98 @@
 class ParticleSystemManager;
 
 
-struct ParticleInfo {
+enum PARAM_TYPE {
+	PARAM_CONST,
+	PARAM_RANDOM_BETWEEN
+};
 
+template<class T> struct TimeValue {
+	float key;
+	T value;
+	bool operator<(const TimeValue& other) const { return key < other.key; }
+};
+
+
+template<typename T> class TimeValues {
+
+	//DynamicArray<TimeValue> array;
+	std::vector<TimeValue<T>> array;
+
+public:
+
+	const T& getValue(float time) {
+	
+		check(array.size());
+
+		if (array[0].key >= time) {
+			return array[0].value;
+		}
+
+		if (array[array.size()-1].key <= time) {
+			return array[array.size() - 1].value;
+		}
+
+
+		for (unsigned i = 0; i < array.size(); i++) {
+			
+			if (array[i].key <= time) {
+				if (array.size() == 1) {
+					return array[0].value;
+				} else {
+					const float alpha = (time - array[i].key) / (array[i + 1].key - array[i].key);
+					return Lerp<T, float>(array[i].value, array[i+1].value, alpha);
+				}
+			}
+		}
+
+		return 	array[0].value;
+
+	}
+
+	void add(float time, const T& value) {
+		
+		TimeValue<T> timeValue;
+		timeValue.key = time;
+		timeValue.value = value;
+
+		array.push_back(timeValue);
+		std::sort(array.begin(), array.end());
+		
+	}
 
 };
+
+
+
+
+template<class T> class ValueParam {
+
+	PARAM_TYPE type;
+	T minValue, maxValue, currentValue;
+
+public:
+
+	ValueParam(const T& currentValue_) : currentValue(currentValue_){}
+	ValueParam(const T& minValue_, const T& maxValue_) {}
+
+	const T& getMaxValue() const { return maxValue; }
+
+	T getValue(float deltaTime) const {
+		
+		switch (type) {
+		
+		};
+
+	}
+
+};
+
+struct ParticleEmitterLifeTimeParam : public ValueParam<float> {};
+struct ParticleEmitterCountParam : public ValueParam<float> {};
+
+
+
+struct ParticleInfo {};
 
 
 class Particle {
@@ -36,6 +124,7 @@ public:
 	bool isAlive() const { return !dead; }
 	bool isDead() const { return dead; }
 	void kill() {}
+	float getCurrentLifeTime() const { return currentLifeTime; }
 
 	void setColor(const Color& color_) { color = color_; }
 	const Color& getColor() const { return color; }
@@ -51,6 +140,10 @@ public:
 	}
 
 };
+
+inline bool sortParticleByLifeTime(const Particle& p1, const Particle& p2) { return p1.getCurrentLifeTime() < p2.getCurrentLifeTime(); }
+
+
 
 #define MAX_PARTICLES 64
 
@@ -85,7 +178,7 @@ public:
 			alived += particle[i].isAlive() ? 1 : 0;
 		}
 	
-		std::sort(&particle[0], &particle[MAX_PARTICLES]);
+		std::sort(&particle[0], &particle[MAX_PARTICLES], sortParticleByLifeTime);
 
 	}
 

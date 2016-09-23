@@ -35,6 +35,10 @@ template <class T1, class T2>
 inline T1 Lerp( const T1& a, const T1& b, T2 alpha ) { return( a * ( 1.0f - alpha ) + b * alpha ); }
 
 template <class T>
+inline T Random(const T& a, const T& b) { return (a + b)/2; }
+
+
+template <class T>
 inline T Clamp(const T& value, const T& minValue, const T& maxValue ) { 
 	if (value < minValue) retun  minValue;
 	if (value > maxValue) retun  maxValue;

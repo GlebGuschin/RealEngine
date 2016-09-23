@@ -737,6 +737,27 @@ void CustomParamTest() {
 
 	SharedPtr<ParticleStorage>  particleStorage = new ParticleStorage;
 
+
+	TimeValues<float> values;
+	values.add(0.0f, 0.0f);
+	values.add(1.0f, 1.0f);
+	values.add(3.0f, 2.0f);
+	values.add(2.0f, 5.0f);
+
+	float value = values.getValue(2.5f);
+
+
+
+	TimeValues<Color> colors;
+	colors.add(0.0f, Color::BLACK);
+	colors.add(1.0f, Color::RED);
+	colors.add(3.0f, Color::GREEN);
+	colors.add(2.0f, Color::BLUE);
+
+	Color color = colors.getValue(1.0f);
+
+
+
 	for (unsigned i = 0; i < 16; i++) {
 		Particle* particle = particleStorage->spawnParticle();
 
