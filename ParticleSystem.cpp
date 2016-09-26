@@ -2,13 +2,14 @@
 #include "ParticleSystem.hpp"
 
 
+/*
 void ParticleEmitter::reset() {
 
 }
 
-void ParticleEmitter::update(float timeDelta) {
+void ParticleEmitter::update(float deltaTime) {
 
-	timeTotal += timeDelta;
+	totalTime += deltaTime;
 
 }
 
@@ -20,21 +21,22 @@ void ParticleEmitter::onUpdate(float timeDelta) {
 }
 
 
-void ParticleEffector::reset() {
+
+void ParticleAffector::reset() {
 
 }
 
-void ParticleEffector::update(float timeDelta) {
+void ParticleAffector::update(float timeDelta) {
 
 	timeTotal += timeDelta;
 }
 
-void ParticleEffector::onReset() {
+void ParticleAffector::onReset() {
 }
 
-void ParticleEffector::onUpdate(float timeDelta) {
+void ParticleAffector::onUpdate(float timeDelta) {
 
 }
-
+*/
 
 

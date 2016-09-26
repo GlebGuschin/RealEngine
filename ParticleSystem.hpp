@@ -8,6 +8,7 @@
 #include "Material.hpp"
 #include "Geometry.hpp"
 #include "Asset.hpp"
+#include "Particle.hpp"
 
 class ParticleSystemManager;
 
@@ -105,6 +106,11 @@ struct ParticleEmitterCountParam : public ValueParam<float> {};
 
 struct ParticleInfo {};
 
+/*
+struct PARTICLE_TYPE {
+	PARTICLE_QUAD =0,
+	PARTICLE_BEAM = 1
+};
 
 class Particle {
 
@@ -133,6 +139,7 @@ public:
 	const Vector& getPosition() const { return position; }
 	void setPosition(const Vector&position_) { position = position_; }
 	void applyPosition(const Vector&position_) { position = position + position_; }
+
 	void update(float deltaTime) {	
 		currentLifeTime += deltaTime;
 		dead = currentLifeTime >= maxLifeTime;	
@@ -142,7 +149,7 @@ public:
 };
 
 inline bool sortParticleByLifeTime(const Particle& p1, const Particle& p2) { return p1.getCurrentLifeTime() < p2.getCurrentLifeTime(); }
-
+*/
 
 
 #define MAX_PARTICLES 64
@@ -182,31 +189,35 @@ public:
 
 	}
 
+	void killAllParticles() {}
+
 };
 
 
 class ParticleEmitter : public Referenced {
 
 	SharedPtr<Material> material;
-	float timeTotal;
+	float totalTime;
+	Vector position, velocity;
 
 protected:
 
+	virtual void onSpawn(Particle*);
 	virtual void onReset();
 	virtual void onUpdate(float timeDelta);
 
 public:
 
-	ParticleEmitter() : timeTotal(0.0f) {}
+	ParticleEmitter() : totalTime(0.0f) {}
 
 	Material* getMaterial() const { return material; }
 
 	void reset();
-	void update(float timeDelta);
+	void update(float deltaTime);
 
 };
 
-class ParticleEffector : public Referenced {
+class ParticleAffector : public Referenced {
 
 	float timeTotal;
 
@@ -217,7 +228,7 @@ protected:
 
 public:
 
-	ParticleEffector() : timeTotal(0.0f) {}
+	ParticleAffector() : timeTotal(0.0f) {}
 
 	void reset();
 	void update(float timeDelta);
@@ -229,11 +240,14 @@ public:
 class ParticleStream : public Referenced {
 
 	SharedPtr<Material> material;
-
+	SharedPtr<ParticleEmitter> emitter;
+	DynamicArray<SharedPtr<ParticleAffector>> affectos;
 
 public:
 
 	Material* getMaterial() const { return material; }
+
+	ParticleEmitter* getEmitter()const;
 
 
 };

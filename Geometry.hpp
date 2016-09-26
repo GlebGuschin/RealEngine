@@ -72,6 +72,12 @@ struct GeometryItem {
 };
 
 
+class Primitive {
+
+};
+
+
+
 
 #define MAX_GEOMETRY_ITEM 16 
 
