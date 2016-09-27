@@ -7,7 +7,37 @@
 
 struct GpuTexture {};
 
-struct RenderSystem {
+
+
+struct RenderObject {
+
+	int vb, ib;
+
+	int vs, ps;
+
+};
+
+struct RenderQueue {
+
+	void addRenderObject(RenderObject*);
+
+};
+
+
+struct RenderPass {
+
+	int colorRt, depthStencilRT;
+	int projection;
+	int clearColor, clearDepthValue;
+
+	void renderQueue();
+
+};
+
+struct Renderer {
+
+
+
 
 	int createTexture();
 	void destroyTexture();
@@ -33,7 +63,8 @@ struct RenderSystem {
 
 struct RenderContext {
 
-
+	void beginQuery(int query) {}
+	void endQuery(int query) {}
 
 };
 
